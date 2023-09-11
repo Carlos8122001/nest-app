@@ -1,0 +1,13 @@
+{
+    "users":[
+        {
+            "userName": "pedro.p",
+            "password": "mypassword",
+            "profile": {
+              "firstName": "myfirstName",
+              "lastName": "mylastName",
+              "email": "myemail"
+            }
+          }
+    ]
+}
