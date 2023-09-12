@@ -25,9 +25,36 @@ export default function Register() {
     },
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const [error, setError] = useState({
+    error: false,
+    message: null,
+  });
+
+  const handleSubmit = () => {
     return console.log(data);
+  };
+
+  const handleError = (event) => {
+    event.preventDefault();
+    if (
+      data.profile.firstName === "" ||
+      data.profile.lastName === "" ||
+      data.profile.email === "" ||
+      data.userName === "" ||
+      data.password === ""
+    ) {
+      setError({
+        error: true,
+        message: "Error the field is empty",
+      });
+    } else {
+      setError({
+        error: false,
+        message: null,
+      });
+
+      handleSubmit();
+    }
   };
 
   return (
@@ -52,17 +79,17 @@ export default function Register() {
             </Typography>
             <Box
               component="form"
-              onSubmit={handleSubmit}
               noValidate
               sx={{ mt: 3 }}
               autoComplete={"off"}
+              onSubmit={(event) => {
+                handleError(event);
+              }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    name="firstName"
                     fullWidth
-                    id="firstName"
                     label="First Name"
                     autoFocus
                     value={data.profile.firstName.value}
@@ -75,6 +102,8 @@ export default function Register() {
                         },
                       });
                     }}
+                    error={error.error}
+                    helperText={error.message}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -93,6 +122,8 @@ export default function Register() {
                         },
                       });
                     }}
+                    error={error.error}
+                    helperText={error.message}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -110,6 +141,8 @@ export default function Register() {
                         },
                       });
                     }}
+                    error={error.error}
+                    helperText={error.message}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -121,6 +154,8 @@ export default function Register() {
                     onChange={(event) => {
                       setData({ ...data, userName: event.target.value });
                     }}
+                    error={error.error}
+                    helperText={error.message}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -133,6 +168,8 @@ export default function Register() {
                     onChange={(event) => {
                       setData({ ...data, password: event.target.value });
                     }}
+                    error={error.error}
+                    helperText={error.message}
                   />
                 </Grid>
               </Grid>
