@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "back": "json-server --watch src/mocks/Users.json --port 3000"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -16,10 +17,12 @@
     "@mui/icons-material": "^5.14.8",
     "@mui/material": "^5.14.8",
     "@mui/styled-engine-sc": "^5.14.8",
+    "json-server": "^0.17.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
-    "styled-components": "^5.3.11"
+    "styled-components": "^5.3.11",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

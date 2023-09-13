@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,11 +12,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Nav from "../components/Nav";
+import { postFetch } from "../helpers/Fetch";
 
 const defaultTheme = createTheme();
 
+const API_LOCAL = import.meta.env.VITE_API_LOCAL
+
 export default function Register() {
   const [data, setData] = useState({
+    id:uuidv4(),
     userName: "",
     password: "",
     profile: {
@@ -30,8 +35,8 @@ export default function Register() {
     message: null,
   });
 
-  const handleSubmit = () => {
-    return console.log(data);
+  const handleSubmit =  () => {
+  postFetch(API_LOCAL,data)
   };
 
   const handleError = (event) => {
@@ -56,6 +61,7 @@ export default function Register() {
       handleSubmit();
     }
   };
+
 
   return (
     <>
