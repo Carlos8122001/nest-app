@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,14 +13,15 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Nav from "../components/Nav";
 import { postFetch } from "../helpers/Fetch";
+import CustomMessage from "../components/CustomMessage";
 
 const defaultTheme = createTheme();
 
-const API_LOCAL = import.meta.env.VITE_API_LOCAL
+const API_LOCAL = import.meta.env.VITE_API_LOCAL;
 
 export default function Register() {
   const [data, setData] = useState({
-    id:uuidv4(),
+    id: uuidv4(),
     userName: "",
     password: "",
     profile: {
@@ -35,11 +36,25 @@ export default function Register() {
     message: null,
   });
 
-  const handleSubmit =  () => {
-  postFetch(API_LOCAL,data)
+  const [loading, setLoading] = useState(true);
+
+  const postUser = () => {
+    try {
+      postFetch(API_LOCAL, data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleError = (event) => {
+  const handleSubmit = (event) => {
+    postUser();
+    event.target.reset();
+    console.log(data);
+  };
+
+  const validateForm = (event) => {
     event.preventDefault();
     if (
       data.profile.firstName === "" ||
@@ -58,10 +73,9 @@ export default function Register() {
         message: null,
       });
 
-      handleSubmit();
+      handleSubmit(event);
     }
   };
-
 
   return (
     <>
@@ -89,12 +103,13 @@ export default function Register() {
               sx={{ mt: 3 }}
               autoComplete={"off"}
               onSubmit={(event) => {
-                handleError(event);
+                validateForm(event);
               }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    required
                     fullWidth
                     label="First Name"
                     autoFocus
@@ -114,6 +129,7 @@ export default function Register() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    required
                     fullWidth
                     id="lastName"
                     label="Last Name"
@@ -134,6 +150,7 @@ export default function Register() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    required
                     fullWidth
                     label="Email Address"
                     name="email"
@@ -153,6 +170,7 @@ export default function Register() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    required
                     fullWidth
                     label="Username"
                     name="username"
@@ -166,6 +184,7 @@ export default function Register() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    required
                     fullWidth
                     name="password"
                     label="Password"
@@ -180,6 +199,17 @@ export default function Register() {
                 </Grid>
               </Grid>
               <Grid container justifyContent="center">
+                {!loading ? (
+                  <CustomMessage
+                    severity={"success"}
+                    message={"Successful registration"}
+                  />
+                ) : (
+                  <CustomMessage
+                    severity={"info"}
+                    message={"Please fill in the required fields *"}
+                  />
+                )}
                 <Button
                   type="submit"
                   variant="contained"

@@ -29,6 +29,26 @@
         "lastName": "jose",
         "email": "jose@correo.com"
       }
+    },
+    {
+      "id": "c079acbf-d512-466d-ba87-b52070e74a37",
+      "userName": "Car123",
+      "password": "1234",
+      "profile": {
+        "firstName": "Carlos",
+        "lastName": "Javier",
+        "email": "Carlos@gmail.com"
+      }
+    },
+    {
+      "id": "fcff2574-b67a-4ce7-8624-8fe72fe9771f",
+      "userName": "luis1234",
+      "password": "1234",
+      "profile": {
+        "firstName": "Luis",
+        "lastName": "Rondon",
+        "email": "luis@gmail.com"
+      }
     }
   ]
 }
