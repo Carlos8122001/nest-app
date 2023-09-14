@@ -10,30 +10,21 @@ import NavBar from "./components/NavBar.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <>
-        <NavBar /> <App />
-      </>
-    ),
+    element: <FormLogin />,
     errorElement: <NotFound />,
   },
 
   {
-    path: "/login",
-    element: (
-      <>
-        <NavBar />
-        <FormLogin />
-      </>
-    ),
+    path: "/register",
+    element: <FormRegister />,
   },
 
   {
-    path: "/register",
+    path: "/home",
     element: (
       <>
         <NavBar />
-        <FormRegister />
+        <App />
       </>
     ),
   },

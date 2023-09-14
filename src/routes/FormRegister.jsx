@@ -11,9 +11,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link as LinkRouter } from "react-router-dom";
 import { postFetch } from "../helpers/Fetch";
 import CustomMessage from "../components/CustomMessage";
-import { Link as LinkRouter } from "react-router-dom";
+
 
 const defaultTheme = createTheme();
 
@@ -225,7 +226,7 @@ export default function Register() {
                     href="#"
                     variant="body2"
                     component={LinkRouter}
-                    to={"/login"}
+                    to={"/"}
                   >
                     Already have an account? Sign in
                   </Link>
