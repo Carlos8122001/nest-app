@@ -26,8 +26,6 @@ export default function FormLogin() {
     message: null,
   });
 
-  const [loading, setLoading] = useState(false);
-
   const handleSubmit = (event) => {
     console.log(data);
   };
