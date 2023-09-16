@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,15 +10,29 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as LinkRouter } from "react-router-dom";
+import { Link as LinkRouter, Navigate, useNavigate } from "react-router-dom";
 import CustomMessage from "../components/CustomMessage";
+import { loginServices } from "../services/usersServices";
+import UseLocalStorage from "../hooks/useLocalStorage";
 
 export default function FormLogin() {
   const defaultTheme = createTheme();
+  const { setLocalStorage } = UseLocalStorage();
 
   const [data, setData] = useState({
     userName: "",
     password: "",
+  });
+
+  const [userLogin, setUserLogin] = useState({
+    access_token: "",
+    refresh_token: "",
+  });
+
+  const [loginMessage, setLoginMessage] = useState({
+    error: false,
+    severity: "null",
+    message: "Please fill up the required fields *",
   });
 
   const [error, setError] = useState({
@@ -26,8 +40,30 @@ export default function FormLogin() {
     message: null,
   });
 
-  const handleSubmit = (event) => {
-    console.log(data);
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const login = await loginServices(data);
+      const User = await login;
+
+      if (login.status === 401) {
+        setLoginMessage({
+          error: true,
+          severity: "error",
+          message: login.message,
+        });
+      } else if (login.status === 200) {
+        setLoginMessage({
+          error: false,
+          severity: "sucess",
+          message: "successful login",
+        });
+        setUserLogin(User)
+        setLocalStorage("user",userLogin)
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const validateForm = (event) => {
@@ -43,9 +79,10 @@ export default function FormLogin() {
         message: null,
       });
 
-      handleSubmit(event);
+      handleLogin(event);
     }
   };
+
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
@@ -101,10 +138,18 @@ export default function FormLogin() {
                 helperText={error.message}
               />
               <Grid container justifyContent={"center"}>
-                <CustomMessage
-                  severity={"info"}
-                  message={"Please fill in the required fields *"}
-                />
+                {loginMessage.error ? (
+                  <CustomMessage
+                    severity={"error"}
+                    message={loginMessage.message}
+                  />
+                ) : (
+                  <CustomMessage
+                    severity={"info"}
+                    message={loginMessage.message}
+                  />
+                )}
+
                 <Button
                   type="submit"
                   variant="contained"

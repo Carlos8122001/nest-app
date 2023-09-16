@@ -5,15 +5,16 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 
 export default function NavBar({ data }) {
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const navigate = useNavigate();
   const handleClose = () => {
     setAnchorEl(null);
+    navigate("/");
   };
 
   const handleMenu = (event) => {

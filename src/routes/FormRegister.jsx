@@ -18,11 +18,10 @@ import CustomMessage from "../components/CustomMessage";
 
 const defaultTheme = createTheme();
 
-const API_LOCAL = import.meta.env.VITE_API_LOCAL;
+const API = import.meta.env.VITE_API;
 
 export default function Register() {
   const [data, setData] = useState({
-    id: uuidv4(),
     userName: "",
     password: "",
     profile: {
@@ -41,7 +40,7 @@ export default function Register() {
 
   const postUser = () => {
     try {
-      postFetch(API_LOCAL, data);
+      postFetch(`${API}/users`, data);
     } catch (error) {
       console.log(error);
     } finally {
