@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as LinkRouter, Navigate, useNavigate } from "react-router-dom";
+import { Link as LinkRouter} from "react-router-dom";
 import CustomMessage from "../components/CustomMessage";
 import { loginServices } from "../services/usersServices";
 import UseLocalStorage from "../hooks/useLocalStorage";
@@ -22,11 +22,6 @@ export default function FormLogin() {
   const [data, setData] = useState({
     userName: "",
     password: "",
-  });
-
-  const [userLogin, setUserLogin] = useState({
-    access_token: "",
-    refresh_token: "",
   });
 
   const [loginMessage, setLoginMessage] = useState({
@@ -44,7 +39,6 @@ export default function FormLogin() {
     event.preventDefault();
     try {
       const login = await loginServices(data);
-      const User = await login;
 
       if (login.status === 401) {
         setLoginMessage({
@@ -58,8 +52,7 @@ export default function FormLogin() {
           severity: "sucess",
           message: "successful login",
         });
-        setUserLogin(User)
-        setLocalStorage("user",userLogin)
+        setLocalStorage("user", login);
       }
     } catch (error) {
       console.log(error);
