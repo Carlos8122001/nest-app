@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { Link, useNavigate } from "react-router-dom";
-import { IconButton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { IconButton, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
+import { dataContext } from "../context/Context";
 
-export default function NavBar({ data }) {
+export default function NavBar() {
+  const { data } = useContext(dataContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const logout = () => {
+    localStorage.clear();
     navigate("/");
   };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   return (
     <Box sx={{ width: "100%" }}>
       <AppBar sx={{ position: "absolute", top: 0 }}>
@@ -28,6 +34,7 @@ export default function NavBar({ data }) {
           <Box sx={{ flexGrow: 2 }}>
             <Button color="inherit">LOGO</Button>
           </Box>
+          <Typography>{data.userName}</Typography>
           <IconButton
             size="large"
             aria-label="account of current user"
@@ -50,11 +57,11 @@ export default function NavBar({ data }) {
               vertical: "top",
               horizontal: "right",
             }}
-            open={anchorEl}
+            open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>correo@gmail.com</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>{data.email}</MenuItem>
+            <MenuItem onClick={logout}>Logout</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>

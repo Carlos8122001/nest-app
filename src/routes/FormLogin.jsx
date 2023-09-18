@@ -10,14 +10,16 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as LinkRouter} from "react-router-dom";
+import { Link as LinkRouter, Navigate } from "react-router-dom";
 import CustomMessage from "../components/CustomMessage";
 import { loginServices } from "../services/usersServices";
-import UseLocalStorage from "../hooks/useLocalStorage";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 export default function FormLogin() {
   const defaultTheme = createTheme();
-  const { setLocalStorage } = UseLocalStorage();
+  const { setLocalStorage, getLocalStorage } = useLocalStorage();
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     userName: "",
@@ -52,7 +54,9 @@ export default function FormLogin() {
           severity: "sucess",
           message: "successful login",
         });
-        setLocalStorage("user", login);
+        setLocalStorage("access_token", login.access_token);
+        setLocalStorage("refresh_token", login.refresh_token);
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
