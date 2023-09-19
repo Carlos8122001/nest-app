@@ -1,5 +1,3 @@
-
-import { useState, useContext } from "react";
 import React, { useContext, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -12,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as LinkRouter} from "react-router-dom";
+import { Link as LinkRouter } from "react-router-dom";
 import CustomMessage from "../components/CustomMessage";
 import { loginServices } from "../services/usersServices";
 import { useNavigate } from "react-router-dom";
@@ -63,8 +61,8 @@ export default function FormLogin() {
           email,
           role,
           access_token: response.access_token,
-          refresh_token: response.refresh_token
-        })
+          refresh_token: response.refresh_token,
+        });
         navigate("/dashboard");
       }
     } catch (error) {

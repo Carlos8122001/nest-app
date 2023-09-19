@@ -1,8 +1,5 @@
 import { useContext } from "react";
 import { useRoutes } from "react-router-dom";
-
-import { authContext } from "../context/UseContext";
-=======
 import { authContext } from "../context/useContext";
 
 import FormLogin from "../routes/FormLogin";
@@ -12,6 +9,7 @@ import NavBar from "../components/NavBar";
 
 export default function UseRouting() {
   const { getUserId } = useContext(authContext);
+  console.log(getUserId())
 
   return useRoutes([
     {
@@ -25,7 +23,7 @@ export default function UseRouting() {
       },
       {
         path: "/dashboard",
-        element: getUserId() === null ? (
+        element: getUserId() === 0 ? (
           <FormLogin />
         ) : (
           <>

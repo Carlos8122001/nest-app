@@ -11,13 +11,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as LinkRouter } from "react-router-dom";
-import { postFetch } from "../helpers/Fetch";
 import CustomMessage from "../components/CustomMessage";
-
+import { userRegisterServices } from "../services/usersServices";
 
 const defaultTheme = createTheme();
-
-const API = import.meta.env.VITE_API;
 
 export default function Register() {
   const [data, setData] = useState({
@@ -37,20 +34,19 @@ export default function Register() {
 
   const [loading, setLoading] = useState(true);
 
-  const postUser = () => {
-    try {
-      postFetch(`${API}/users`, data);
-    } catch (error) {
-      console.log(error);
-    } finally {
+  const postUser = async () => {
+    const response = await userRegisterServices(data);
+
+    if (response.status === 201) {
       setLoading(false);
+      console.log(data);
+    } else if (response.status === 400) {
+      console.log(response.message);
     }
   };
-
   const handleSubmit = (event) => {
     postUser();
     event.target.reset();
-    console.log(data);
   };
 
   const validateForm = (event) => {
