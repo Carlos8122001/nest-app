@@ -49,13 +49,13 @@ export default function FormLogin() {
           message: login.message,
         });
       } else if (login.status === 200) {
+        setLocalStorage("access_token", login.access_token);
+        setLocalStorage("refresh_token", login.refresh_token);
         setLoginMessage({
           error: false,
           severity: "sucess",
           message: "successful login",
         });
-        setLocalStorage("access_token", login.access_token);
-        setLocalStorage("refresh_token", login.refresh_token);
         navigate("/dashboard");
       }
     } catch (error) {
