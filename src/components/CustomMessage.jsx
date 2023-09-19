@@ -1,4 +1,4 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 

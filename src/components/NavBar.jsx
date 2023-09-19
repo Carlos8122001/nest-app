@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { IconButton, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { authContext } from "../context/useContext";
+
 
 export default function NavBar() {
   const { getEmail } = useContext(authContext);
@@ -61,6 +62,7 @@ export default function NavBar() {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>{getEmail()}</MenuItem>
+
             <MenuItem onClick={logout}>Logout</MenuItem>
           </Menu>
         </Toolbar>
