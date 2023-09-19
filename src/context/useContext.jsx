@@ -61,4 +61,3 @@ export const ContextProvider = ({ children }) => {
     </authContext.Provider>
   );
 };
-
