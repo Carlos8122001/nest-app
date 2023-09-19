@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,10 +8,10 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { IconButton, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { dataContext } from "../context/Context";
+import { authContext } from "../context/UseContext";
 
 export default function NavBar() {
-  const { data } = useContext(dataContext);
+  const { getEmail } = useContext(authContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const handleClose = () => {
@@ -34,7 +34,7 @@ export default function NavBar() {
           <Box sx={{ flexGrow: 2 }}>
             <Button color="inherit">LOGO</Button>
           </Box>
-          <Typography>{data.userName}</Typography>
+          <Typography>{getEmail()}</Typography>
           <IconButton
             size="large"
             aria-label="account of current user"
@@ -60,7 +60,6 @@ export default function NavBar() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>{data.email}</MenuItem>
             <MenuItem onClick={logout}>Logout</MenuItem>
           </Menu>
         </Toolbar>

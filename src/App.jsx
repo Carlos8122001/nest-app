@@ -1,13 +1,16 @@
-import { Typography } from "@mui/material";
-import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { ContextProvider } from "./context/UseContext";
+import UseRouting from "./hooks/useRouting";
 
-function App() {
+const App = () => {
   return (
-    <>
-    <Typography>
-        Dashboard
-    </Typography>
-    </>
+    <ContextProvider>
+      <BrowserRouter>
+        <div>
+          <UseRouting />
+        </div>
+      </BrowserRouter>
+    </ContextProvider>
   );
 }
 
