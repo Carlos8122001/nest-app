@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,12 +13,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as LinkRouter, Navigate } from "react-router-dom";
 import CustomMessage from "../components/CustomMessage";
 import { loginServices } from "../services/usersServices";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
+import { authContext } from "../context/useContext";
+import jwtDecode from "jwt-decode";
 
 export default function FormLogin() {
   const defaultTheme = createTheme();
-  const { setLocalStorage, getLocalStorage } = useLocalStorage();
+  const { login } = useContext(authContext);
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -40,22 +41,28 @@ export default function FormLogin() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const login = await loginServices(data);
+      const response = await loginServices(data);
 
-      if (login.status === 401) {
+      if (response.status === 401) {
         setLoginMessage({
           error: true,
           severity: "error",
-          message: login.message,
+          message: response.message,
         });
-      } else if (login.status === 200) {
-        setLocalStorage("access_token", login.access_token);
-        setLocalStorage("refresh_token", login.refresh_token);
+      } else if (response.status === 200) {
         setLoginMessage({
           error: false,
-          severity: "sucess",
+          severity: "success",
           message: "successful login",
         });
+        const { userId, email, role } = jwtDecode(response.access_token);
+        login({
+          userId,
+          email,
+          role,
+          access_token: response.access_token,
+          refresh_token: response.refresh_token
+        })
         navigate("/dashboard");
       }
     } catch (error) {
