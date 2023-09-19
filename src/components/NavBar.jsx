@@ -8,7 +8,8 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { IconButton, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { authContext } from "../context/UseContext";
+import { authContext } from "../context/useContext";
+
 
 export default function NavBar() {
   const { getEmail } = useContext(authContext);
@@ -60,6 +61,8 @@ export default function NavBar() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
+            <MenuItem onClick={handleClose}>{getEmail()}</MenuItem>
+
             <MenuItem onClick={logout}>Logout</MenuItem>
           </Menu>
         </Toolbar>

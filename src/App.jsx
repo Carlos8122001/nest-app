@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import { ContextProvider } from "./context/UseContext";
+import { ContextProvider } from "./context/useContext";
 import UseRouting from "./hooks/useRouting";
 
 const App = () => {

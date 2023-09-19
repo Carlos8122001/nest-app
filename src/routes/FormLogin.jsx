@@ -1,4 +1,6 @@
+
 import { useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,7 +16,7 @@ import { Link as LinkRouter} from "react-router-dom";
 import CustomMessage from "../components/CustomMessage";
 import { loginServices } from "../services/usersServices";
 import { useNavigate } from "react-router-dom";
-import { authContext } from "../context/UseContext";
+import { authContext } from "../context/useContext";
 import jwtDecode from "jwt-decode";
 
 export default function FormLogin() {
@@ -47,7 +49,7 @@ export default function FormLogin() {
         setLoginMessage({
           error: true,
           severity: "error",
-          message: login.message,
+          message: response.message,
         });
       } else if (response.status === 200) {
         setLoginMessage({
