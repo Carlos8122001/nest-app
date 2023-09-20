@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "View nature",
+      "description": "View nature forever",
+      "type": "OCIO",
+      "createdAt": "2023-09-15T00:55:45.624Z"
+  },
+  {
+      "id": 2,
+      "title": "react",
+      "description": "library ui",
+      "type": "code",
+      "createdAt": "2023-09-15T00:59:19.335Z"
+  }
+  ]
+}

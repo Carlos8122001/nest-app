@@ -5,11 +5,11 @@ import FormLogin from "../routes/FormLogin";
 import NotFound from "../routes/NotFound";
 import Register from "../routes/FormRegister";
 import NavBar from "../components/NavBar";
+import Dashboard from "../routes/Dashboard";
 
 export default function UseRouting() {
   const { getUserId } = useContext(authContext);
-  console.log(getUserId())
-
+  
   return useRoutes([
     {
         path: "/",
@@ -27,7 +27,7 @@ export default function UseRouting() {
         ) : (
           <>
             <NavBar />
-           <h2>Dashboard</h2>
+           <Dashboard/>
           </>
         ),
       },
