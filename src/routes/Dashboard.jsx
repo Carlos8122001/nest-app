@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Container, Typography } from "@mui/material";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import Grid from "@mui/material/Grid";
+import { Box, Container, Typography } from "@mui/material";
 import { authContext } from "../context/useContext";
 import { getPostServices } from "../services/postsServices";
-import Grid from "@mui/material/Grid";
+
 import Post from "../components/Post";
 
 export default function Dashboard() {
   const { getAccessToken, getUserId } = useContext(authContext);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
 
   const id = getUserId();
   const token = getAccessToken();
@@ -27,17 +31,35 @@ export default function Dashboard() {
 
   return (
     <>
-      <Container sx={{ marginTop: 15 }}>
-        {!posts ? (
-          <Typography>No post found</Typography>
+      <Box sx={{ height: "auto" }}>
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+        />
+      </Box>
+      <Container
+        sx={{
+          marginTop: 16,
+          marginBottom: 2,
+          width: "65%",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        {posts === null ? (
+          <Typography variant="h2" textAlign={"center"} fontWeight={"400"}>
+            No post found
+          </Typography>
         ) : (
           <Grid
             container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
+            justifyContent="left"
+            spacing={5}
+            columns={{ xs: 2, sm: 4, md: 12 }}
           >
             {posts.map((data) => (
-              <Grid item xs={2} sm={4} md={4} key={data.id}>
+              <Grid item xs={2} sm={2} md={4} key={data.id}>
                 <Post data={data} />
               </Grid>
             ))}
