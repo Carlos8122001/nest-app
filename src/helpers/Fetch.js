@@ -1,8 +1,14 @@
 const apiurl = import.meta.env.VITE_API_URL;
 
-export const getFetch = async (route) => {
+export const getFetch = async (route, token) => {
   try {
-    const response = await fetch(`${apiurl}${route}`);
+    const response = await fetch(`${apiurl}${route}`, {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }),
+    });
     const json = await response.json();
     return json;
   } catch (error) {
@@ -10,11 +16,14 @@ export const getFetch = async (route) => {
   }
 };
 
-export const postFetch = async (route, data) => {
+export const postFetch = async (route, data, token) => {
   try {
     let response = await fetch(`${apiurl}${route}`, {
       method: "POST",
-      headers: { "Content-type": "application/json; charset=utf-8" },
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }),
       body: JSON.stringify(data),
     });
 
