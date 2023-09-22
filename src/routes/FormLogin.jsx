@@ -14,7 +14,7 @@ import { Link as LinkRouter } from "react-router-dom";
 import CustomMessage from "../components/CustomMessage";
 import { loginServices } from "../services/usersServices";
 import { useNavigate } from "react-router-dom";
-import { authContext } from "../context/useContext";
+import { authContext } from "../context/UseContext";
 import jwtDecode from "jwt-decode";
 
 export default function FormLogin() {
@@ -158,7 +158,7 @@ export default function FormLogin() {
                   type="submit"
                   variant="contained"
                   size="large"
-                  sx={{ mt: 3, mb: 2, width: "60%" }}
+                  sx={{ mt: 3, mb: 2, width: "60%"}}
                 >
                   Sign In
                 </Button>

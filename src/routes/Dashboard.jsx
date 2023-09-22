@@ -1,20 +1,39 @@
 import React, { useContext, useEffect, useState } from "react";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Grid from "@mui/material/Grid";
-import { Box, Container, Typography } from "@mui/material";
-import { authContext } from "../context/useContext";
-import { getPostServices } from "../services/postsServices";
-
+import { Container, Typography } from "@mui/material";
+import { authContext } from "../context/UseContext";
+import { getPostServices, postPostServices } from "../services/postsServices";
+import ModalForm from "../components/ModalForm";
 import Post from "../components/Post";
 
 export default function Dashboard() {
   const { getAccessToken, getUserId } = useContext(authContext);
-  const [posts, setPosts] = useState(null);
-
   const id = getUserId();
   const token = getAccessToken();
+  const [posts, setPosts] = useState(null);
+  const [newPost, setNewPost] = useState(null);
+  const [data, setData] = useState({
+    title: "",
+    description: "",
+    type: "",
+    users: {
+      id: id,
+    },
+  });
+
+  const createPostUser = async () => {
+    try {
+      const response = await postPostServices(data, token);
+      if (response.status === 401) {
+        console.log(response.message);
+      } else if (response.status === 201) {
+        setNewPost(response);
+        setPosts({ ...posts, newPost });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getPostUser = async () => {
     try {
@@ -31,13 +50,6 @@ export default function Dashboard() {
 
   return (
     <>
-      <Box sx={{ height: "auto" }}>
-        <SpeedDial
-          ariaLabel="SpeedDial basic example"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon />}
-        />
-      </Box>
       <Container
         sx={{
           marginTop: 16,
@@ -66,6 +78,11 @@ export default function Dashboard() {
           </Grid>
         )}
       </Container>
+      <ModalForm
+        data={data}
+        setData={setData}
+        createPostUser={createPostUser}
+      />
     </>
   );
 }
