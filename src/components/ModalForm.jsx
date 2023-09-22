@@ -6,7 +6,12 @@ import { Modal } from "@mui/base/Modal";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import { Button, Grid, SpeedDial, TextField } from "@mui/material";
 
-export default function ModalForm({ data, setData,createPostUser}) {
+export default function ModalForm({
+  data,
+  setData,
+  createPostUser,
+  getPostUser,
+}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -14,6 +19,12 @@ export default function ModalForm({ data, setData,createPostUser}) {
     error: false,
     message: null,
   });
+
+  const handleForm = () => {
+    createPostUser();
+    getPostUser();
+    handleClose();
+  };
 
   const validateForm = () => {
     if (data.title === "" || data.description === "" || data.type === "") {
@@ -26,8 +37,7 @@ export default function ModalForm({ data, setData,createPostUser}) {
         error: false,
         message: null,
       });
-      createPostUser()
-      handleClose();
+      handleForm();
     }
   };
 

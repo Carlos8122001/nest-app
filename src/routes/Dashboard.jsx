@@ -82,6 +82,7 @@ export default function Dashboard() {
         data={data}
         setData={setData}
         createPostUser={createPostUser}
+        getPostUser={getPostUser}
       />
     </>
   );
