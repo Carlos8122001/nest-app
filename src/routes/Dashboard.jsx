@@ -48,7 +48,10 @@ export default function Dashboard() {
       if (response.status === 400) {
         console.log(response.message);
       } else if (response.status === 201) {
-        setData([...data, response]);
+        if (posts.length >= 1) {
+          return setPosts([...posts, response]);
+        }
+          setPosts([response]);
       }
     } catch (error) {
       console.log(error);
