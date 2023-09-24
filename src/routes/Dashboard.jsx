@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import {
   Box,
@@ -19,8 +19,6 @@ import Post from "../components/Post";
 
 export default function Dashboard() {
   const { getAccessToken, getUserId } = useContext(authContext);
-  const id = getUserId();
-  const token = getAccessToken();
   const [postId, setPostId] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -30,13 +28,13 @@ export default function Dashboard() {
     description: "",
     type: "",
     users: {
-      id: id,
+      id: getUserId(),
     },
   });
 
   const getPostUser = async () => {
     try {
-      const response = await getPostServices(id, token);
+      const response = await getPostServices(getUserId(), getAccessToken());
       setPosts(response);
     } catch (error) {
       console.log(error);
@@ -45,7 +43,7 @@ export default function Dashboard() {
 
   const createPostUser = async () => {
     try {
-      const response = await postPostServices(data, token);
+      const response = await postPostServices(data, getAccessToken());
       console.log(response);
       if (response.status === 400) {
         console.log(response.message);
@@ -59,7 +57,7 @@ export default function Dashboard() {
 
   const updatePostUser = async (idPost) => {
     try {
-      const response = await patchPostServices(data, token, idPost);
+      const response = await patchPostServices(data, getAccessToken(), idPost);
       if (response.status === 400) {
         console.log(response.message);
       } else if (response.status === 200) {
@@ -73,7 +71,7 @@ export default function Dashboard() {
 
   const deletePostUser = async (idPost) => {
     try {
-      const response = await deletePostServices(idPost, token);
+      const response = await deletePostServices(idPost, getAccessToken());
       if (response.status === 202) {
         setPosts([...posts.filter((post) => post.id !== idPost)]);
       }
@@ -147,7 +145,7 @@ export default function Dashboard() {
               description: "",
               type: "",
               users: {
-                id: id,
+                id: getUserId(),
               },
             });
           }}

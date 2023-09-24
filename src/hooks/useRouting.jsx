@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useRoutes } from "react-router-dom";
-import { authContext } from "../context/useContext";
+import { authContext } from "../context/UseContext";
 import FormLogin from "../routes/FormLogin";
 import NotFound from "../routes/NotFound";
 import Register from "../routes/FormRegister";
@@ -9,7 +9,7 @@ import Dashboard from "../routes/Dashboard";
 
 export default function UseRouting() {
   const { getUserId } = useContext(authContext);
-  
+
   return useRoutes([
     {
         path: "/",

@@ -8,7 +8,7 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { IconButton, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { authContext } from "../context/useContext";
+import { authContext } from "../context/UseContext";
 
 
 export default function NavBar() {
