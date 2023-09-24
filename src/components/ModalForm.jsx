@@ -1,29 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { styled, Box } from "@mui/system";
 import { Modal } from "@mui/base/Modal";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
-import { Button, Grid, SpeedDial, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 
 export default function ModalForm({
   data,
   setData,
   createPostUser,
-  getPostUser,
+  updatePostUser,
+  mode,
+  open,
+  setOpen,
 }) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [error, setError] = useState({
     error: false,
     message: null,
   });
 
   const handleForm = () => {
-    createPostUser();
-    getPostUser();
-    handleClose();
+    mode === "new" ? createPostUser() : updatePostUser(data.id);
+    setOpen(false);
   };
 
   const validateForm = () => {
@@ -43,19 +41,11 @@ export default function ModalForm({
 
   return (
     <div>
-      <Box sx={{ height: "auto" }}>
-        <SpeedDial
-          ariaLabel="SpeedDial basic example"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon />}
-          onClick={handleOpen}
-        />
-      </Box>
       <StyledModal
         aria-labelledby="unstyled-modal-title"
         aria-describedby="unstyled-modal-description"
         open={open}
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         slots={{ backdrop: StyledBackdrop }}
       >
         <Box
@@ -74,7 +64,7 @@ export default function ModalForm({
             fullWidth
             label="Title"
             name="title"
-            value={data.title.value}
+            value={data.title}
             onChange={(event) => {
               setData({ ...data, title: event.target.value });
             }}
@@ -88,7 +78,7 @@ export default function ModalForm({
             fullWidth
             label="description"
             name="description"
-            value={data.description.value}
+            value={data.description}
             onChange={(event) => {
               setData({ ...data, description: event.target.value });
             }}
@@ -102,7 +92,7 @@ export default function ModalForm({
             fullWidth
             label="type"
             name="type"
-            value={data.type.value}
+            value={data.type}
             onChange={(event) => {
               setData({ ...data, type: event.target.value });
             }}
@@ -112,14 +102,16 @@ export default function ModalForm({
 
           <Grid container justifyContent={"center"} gap={1} m={1}>
             <Button type="submit" variant="contained" size="large">
-              Create post
+              {mode === "new" ? "Create post" : "Update post"}
             </Button>
             <Button
               type="button"
               variant="contained"
               size="small"
               color="error"
-              onClick={handleClose}
+              onClick={() => {
+                setOpen(false);
+              }}
             >
               Cancel
             </Button>

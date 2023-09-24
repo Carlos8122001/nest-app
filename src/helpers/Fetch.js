@@ -35,3 +35,42 @@ export const postFetch = async (route, data, token) => {
     return console.log("petición fallida", err);
   }
 };
+
+export const patchFetch = async (route, data, token) => {
+  try {
+    let response = await fetch(`${apiurl}${route}`, {
+      method: "PATCH",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }),
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    }
+  } catch (err) {
+    return console.log("petición fallida", err);
+  }
+};
+
+export const deleteFetch = async (route, token) => {
+  try {
+    let response = await fetch(`${apiurl}${route}`, {
+      method: "DELETE",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }),
+    });
+
+    if (response.ok) {
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    }
+  } catch (err) {
+    return console.log("petición fallida", err);
+  }
+};
